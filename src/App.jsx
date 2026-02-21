@@ -30,6 +30,7 @@ export const globalProducts = [
 // ==============================
 const Navbar = ({ cartItems = [], setIsCartOpen }) => {
   const navRef = useRef(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     let ctx = gsap.context(() => {
@@ -56,35 +57,67 @@ const Navbar = ({ cartItems = [], setIsCartOpen }) => {
   }, [location.pathname]);
 
   return (
-    <nav ref={navRef} className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl rounded-full transition-all duration-500 border ${isDarkNavPage ? 'bg-background/90 backdrop-blur-xl text-primary border-primary/20 shadow-2xl' : 'bg-transparent text-background border-transparent [&.scrolled-nav]:bg-background/90 [&.scrolled-nav]:backdrop-blur-xl [&.scrolled-nav]:text-primary [&.scrolled-nav]:border-primary/20 [&.scrolled-nav]:shadow-2xl'}`}>
-      <div className="flex items-center justify-between px-6 py-3 md:px-8 md:py-4">
-        <Link to="/" className="font-heading font-bold text-xl tracking-tight">My Cake Valley</Link>
-        <div className="hidden lg:flex gap-8 font-data text-sm font-medium tracking-wide">
-          <Link to="/menu" className="hover:-translate-y-[1px] transition-transform">Menu</Link>
-          <Link to="/about" className="hover:-translate-y-[1px] transition-transform">About Us</Link>
-          <Link to="/locations" className="hover:-translate-y-[1px] transition-transform">Locations</Link>
-          <Link to="/custom" className="hover:-translate-y-[1px] transition-transform">Custom Requests</Link>
-        </div>
-        <div className="flex gap-4 items-center">
-          <button
-            onClick={() => setIsCartOpen(true)}
-            className="relative flex items-center justify-center w-10 h-10 rounded-full hover:bg-dark/10 [&.scrolled-nav_&]:hover:bg-primary/10 transition-colors"
-          >
-            <ShoppingCart size={20} />
-            {cartItemCount > 0 && (
-              <span className="absolute -top-1 -right-1 bg-accent text-dark text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-background">
-                {cartItemCount}
-              </span>
-            )}
-          </button>
+    <>
+      <nav ref={navRef} className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl rounded-full transition-all duration-500 border ${isDarkNavPage ? 'bg-background/90 backdrop-blur-xl text-primary border-primary/20 shadow-2xl' : 'bg-transparent text-background border-transparent [&.scrolled-nav]:bg-background/90 [&.scrolled-nav]:backdrop-blur-xl [&.scrolled-nav]:text-primary [&.scrolled-nav]:border-primary/20 [&.scrolled-nav]:shadow-2xl'}`}>
+        <div className="flex items-center justify-between px-6 py-3 md:px-8 md:py-4">
+          <Link to="/" className="font-heading font-bold text-xl tracking-tight">My Cake Valley</Link>
+          <div className="hidden lg:flex gap-8 font-data text-sm font-medium tracking-wide">
+            <Link to="/menu" className="hover:-translate-y-[1px] transition-transform">Menu</Link>
+            <Link to="/about" className="hover:-translate-y-[1px] transition-transform">About Us</Link>
+            <Link to="/locations" className="hover:-translate-y-[1px] transition-transform">Locations</Link>
+            <Link to="/custom" className="hover:-translate-y-[1px] transition-transform">Custom Requests</Link>
+          </div>
+          <div className="flex gap-4 items-center">
+            <button
+              onClick={() => setIsCartOpen(true)}
+              className="relative flex items-center justify-center w-10 h-10 rounded-full hover:bg-dark/10 [&.scrolled-nav_&]:hover:bg-primary/10 transition-colors"
+            >
+              <ShoppingCart size={20} />
+              {cartItemCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-accent text-dark text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-background">
+                  {cartItemCount}
+                </span>
+              )}
+            </button>
 
-          <Link to="/menu" className="magnetic-btn bg-accent text-dark px-6 py-2 text-sm font-bold tracking-wide rounded-full inline-block">
-            <span className="relative z-10">Order Now</span>
-            <span className="hover-layer bg-primary/20"></span>
-          </Link>
+            <button
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="lg:hidden relative flex items-center justify-center w-10 h-10 rounded-full hover:bg-dark/10 [&.scrolled-nav_&]:hover:bg-primary/10 transition-colors"
+            >
+              <MenuIcon size={20} />
+            </button>
+
+            <Link to="/menu" className="hidden sm:inline-block magnetic-btn bg-accent text-dark px-6 py-2 text-sm font-bold tracking-wide rounded-full">
+              <span className="relative z-10">Order Now</span>
+              <span className="hover-layer bg-primary/20"></span>
+            </Link>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-[60] bg-background/98 backdrop-blur-xl flex flex-col items-center justify-center lg:hidden">
+          <button
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="absolute top-8 right-8 text-primary hover:bg-primary/10 p-2 rounded-full transition-colors"
+          >
+            <X size={32} />
+          </button>
+          <div className="flex flex-col gap-8 font-heading text-4xl font-bold items-center text-dark">
+            <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-primary transition-colors">Home</Link>
+            <Link to="/menu" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-primary transition-colors">Menu</Link>
+            <Link to="/about" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-primary transition-colors">About Us</Link>
+            <Link to="/locations" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-primary transition-colors">Locations</Link>
+            <Link to="/custom" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-primary transition-colors">Custom Requests</Link>
+
+            <Link to="/menu" onClick={() => setIsMobileMenuOpen(false)} className="mt-8 bg-accent text-dark px-8 py-4 text-xl font-bold rounded-full shadow-xl">
+              Order Now
+            </Link>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
@@ -121,7 +154,7 @@ const Hero = () => {
         <h1 className="hero-anim font-heading font-extrabold text-5xl md:text-7xl text-background leading-tight mb-2">
           artisan baking crafted
         </h1>
-        <h2 className="hero-anim font-drama italic text-7xl md:text-9xl text-accent mb-8 leading-[0.8]">
+        <h2 className="hero-anim font-drama italic text-6xl sm:text-7xl md:text-9xl text-accent mb-8 leading-[0.8] tracking-tight">
           By heritage tradition.
         </h2>
 
@@ -283,12 +316,12 @@ const AboutUs = () => {
         </div>
 
         {/* Artistic Dual-Panel Image Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-4 h-[600px] md:h-[800px] mb-24">
-          <div className="md:col-span-5 h-[300px] md:h-[600px] mt-auto relative rounded-[3rem] overflow-hidden group">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-4 h-auto md:h-[800px] mb-24">
+          <div className="md:col-span-5 h-[400px] md:h-[600px] mt-auto relative rounded-[3rem] overflow-hidden group">
             <img src="https://images.unsplash.com/photo-1534620808146-d33bb39128b2?q=80&w=1200" alt="Baker dusting flour" className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000" />
             <div className="absolute inset-0 bg-dark/20 mix-blend-multiply transition-colors duration-500 group-hover:bg-transparent"></div>
           </div>
-          <div className="md:col-span-7 h-[300px] md:h-[700px] relative rounded-[3rem] overflow-hidden group">
+          <div className="md:col-span-7 h-[400px] md:h-[700px] relative rounded-[3rem] overflow-hidden group">
             <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1200" alt="Fresh artisan bread out of the oven" className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000" />
             <div className="absolute inset-0 bg-primary/20 mix-blend-multiply transition-colors duration-500 group-hover:bg-transparent"></div>
           </div>
@@ -515,18 +548,18 @@ const ProtocolStack = ({ cartItems, setCartItems }) => {
             <div className="absolute inset-0 bg-accent/20 blur-[100px] rounded-full -z-10 transform scale-150"></div>
 
             {/* Left Image Pane (Slightly lower) */}
-            <div onClick={() => setSelectedProduct(bestSellers[0])} className="block cursor-pointer relative w-48 h-72 md:w-56 md:h-80 rounded-[2rem] overflow-hidden group shadow-2xl transform translate-y-8">
+            <div onClick={() => setSelectedProduct(bestSellers[0])} className="block cursor-pointer relative w-36 h-56 sm:w-48 sm:h-72 md:w-56 md:h-80 rounded-[2rem] overflow-hidden group shadow-2xl transform translate-y-8">
               <img src={bestSellers[0].image} alt={bestSellers[0].name} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000" />
               <div className="absolute inset-0 bg-dark/0 group-hover:bg-dark/40 transition-colors duration-500 flex items-center justify-center">
-                <span className="font-heading font-bold text-background opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center gap-2">View Details <ChevronRight size={20} /></span>
+                <span className="font-heading font-bold text-background opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 flex items-center gap-2">View Details <ChevronRight size={20} /></span>
               </div>
             </div>
 
             {/* Right Image Pane (Slightly higher) */}
-            <div onClick={() => setSelectedProduct(bestSellers[1])} className="block cursor-pointer relative w-48 h-80 md:w-56 md:h-96 rounded-[2rem] overflow-hidden group shadow-2xl transform -translate-y-8">
+            <div onClick={() => setSelectedProduct(bestSellers[1])} className="block cursor-pointer relative w-36 h-64 sm:w-48 sm:h-80 md:w-56 md:h-96 rounded-[2rem] overflow-hidden group shadow-2xl transform -translate-y-8">
               <img src={bestSellers[1].image} alt={bestSellers[1].name} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000" />
               <div className="absolute inset-0 bg-dark/0 group-hover:bg-dark/40 transition-colors duration-500 flex items-center justify-center">
-                <span className="font-heading font-bold text-background opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center gap-2">View Details <ChevronRight size={20} /></span>
+                <span className="font-heading font-bold text-background opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 flex items-center gap-2">View Details <ChevronRight size={20} /></span>
               </div>
             </div>
           </div>
