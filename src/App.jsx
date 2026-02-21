@@ -15,7 +15,7 @@ export const globalProducts = [
   { id: 202, category: 'Pastries', name: 'Chocolate Eclair', price: 8.50, rating: 4.9, reviews: 340, image: 'https://images.unsplash.com/photo-1620921575454-e7225119ff3d?q=80&w=600', desc: 'Classic choux pastry filled with luscious vanilla custard and glazed with dark Belgian chocolate.' },
   { id: 203, category: 'Pastries', name: 'Opera Cake Slice', price: 14.00, rating: 5.0, reviews: 67, image: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=600', desc: 'Exquisite French gâteau consisting of almond sponge cake soaked in coffee syrup, layered with ganache.' },
 
-  { id: 301, category: 'Croissants', name: 'Classic Butter Croissant', price: 6.50, rating: 4.9, reviews: 512, image: 'https://images.unsplash.com/photo-1555507036-ab1f40ce88cb?q=80&w=600', desc: 'Perfectly laminated, shatteringly crisp on the outside, soft and buttery web on the inside.' },
+  { id: 301, category: 'Croissants', name: 'Classic Butter Croissant', price: 6.50, rating: 4.9, reviews: 512, image: 'https://images.unsplash.com/photo-1623334044303-241021148842?q=80&w=600', desc: 'Perfectly laminated, shatteringly crisp on the outside, soft and buttery web on the inside.' },
   { id: 302, category: 'Croissants', name: 'Almond Twice-Baked', price: 8.00, rating: 4.8, reviews: 245, image: 'https://images.unsplash.com/photo-1623366302587-bcaad58e0a39?q=80&w=600', desc: 'Our day-old croissants revived with rum syrup, frangipane filling, and toasted sliced almonds.' },
   { id: 303, category: 'Croissants', name: 'Pain au Chocolat', price: 7.00, rating: 4.9, reviews: 430, image: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=600', desc: 'Crisp, buttery dough wrapped around two batons of dark French baking chocolate.' },
 
@@ -129,10 +129,10 @@ const Hero = () => {
           Daily fresh bakes, signature layered cakes, and delicate morning pastries across four city locations.
         </p>
 
-        <button className="hero-anim magnetic-btn bg-background text-primary px-8 py-4 text-lg font-bold">
+        <Link to="/menu" className="hero-anim magnetic-btn inline-block bg-background text-primary px-8 py-4 text-lg font-bold">
           <span className="relative z-10">Explore Our Collection</span>
           <span className="hover-layer bg-accent/30"></span>
-        </button>
+        </Link>
       </div>
     </section>
   );
@@ -285,11 +285,11 @@ const AboutUs = () => {
         {/* Artistic Dual-Panel Image Grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-4 h-[600px] md:h-[800px] mb-24">
           <div className="md:col-span-5 h-[300px] md:h-[600px] mt-auto relative rounded-[3rem] overflow-hidden group">
-            <img src="https://images.unsplash.com/photo-1542691457-cbe4df041bf2?q=80&w=1200" alt="Baker dusting flour" className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000" />
+            <img src="https://images.unsplash.com/photo-1534620808146-d33bb39128b2?q=80&w=1200" alt="Baker dusting flour" className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000" />
             <div className="absolute inset-0 bg-dark/20 mix-blend-multiply transition-colors duration-500 group-hover:bg-transparent"></div>
           </div>
           <div className="md:col-span-7 h-[300px] md:h-[700px] relative rounded-[3rem] overflow-hidden group">
-            <img src="https://images.unsplash.com/photo-1495147466023-af5c1926673a?q=80&w=1200" alt="Fresh artisan bread out of the oven" className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000" />
+            <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1200" alt="Fresh artisan bread out of the oven" className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000" />
             <div className="absolute inset-0 bg-primary/20 mix-blend-multiply transition-colors duration-500 group-hover:bg-transparent"></div>
           </div>
         </div>
@@ -431,6 +431,7 @@ const Philosophy = () => {
 // ==============================
 const ProtocolStack = ({ cartItems, setCartItems }) => {
   const containerRef = useRef(null);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const bestSellers = globalProducts.filter(p => p.id === 101 || p.id === 301);
 
@@ -514,20 +515,20 @@ const ProtocolStack = ({ cartItems, setCartItems }) => {
             <div className="absolute inset-0 bg-accent/20 blur-[100px] rounded-full -z-10 transform scale-150"></div>
 
             {/* Left Image Pane (Slightly lower) */}
-            <Link to="/menu" className="block relative w-48 h-72 md:w-56 md:h-80 rounded-[2rem] overflow-hidden group shadow-2xl transform translate-y-8">
+            <div onClick={() => setSelectedProduct(bestSellers[0])} className="block cursor-pointer relative w-48 h-72 md:w-56 md:h-80 rounded-[2rem] overflow-hidden group shadow-2xl transform translate-y-8">
               <img src={bestSellers[0].image} alt={bestSellers[0].name} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000" />
               <div className="absolute inset-0 bg-dark/0 group-hover:bg-dark/40 transition-colors duration-500 flex items-center justify-center">
-                <span className="font-heading font-bold text-background opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center gap-2">Explore <ChevronRight size={20} /></span>
+                <span className="font-heading font-bold text-background opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center gap-2">View Details <ChevronRight size={20} /></span>
               </div>
-            </Link>
+            </div>
 
             {/* Right Image Pane (Slightly higher) */}
-            <Link to="/menu" className="block relative w-48 h-80 md:w-56 md:h-96 rounded-[2rem] overflow-hidden group shadow-2xl transform -translate-y-8">
+            <div onClick={() => setSelectedProduct(bestSellers[1])} className="block cursor-pointer relative w-48 h-80 md:w-56 md:h-96 rounded-[2rem] overflow-hidden group shadow-2xl transform -translate-y-8">
               <img src={bestSellers[1].image} alt={bestSellers[1].name} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000" />
               <div className="absolute inset-0 bg-dark/0 group-hover:bg-dark/40 transition-colors duration-500 flex items-center justify-center">
-                <span className="font-heading font-bold text-background opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center gap-2">Explore <ChevronRight size={20} /></span>
+                <span className="font-heading font-bold text-background opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center gap-2">View Details <ChevronRight size={20} /></span>
               </div>
-            </Link>
+            </div>
           </div>
           <div className="flex-1">
             <h2 className="font-heading font-bold text-5xl md:text-7xl mb-4 leading-tight">Best<br className="hidden md:block" /> Sellers</h2>
@@ -536,36 +537,79 @@ const ProtocolStack = ({ cartItems, setCartItems }) => {
         </div>
       </div>
 
-      {/* Card 3: Customer Reviews */}
-      <div className="proto-card sticky top-0 h-screen w-full flex items-center justify-center bg-dark text-background z-30 shadow-[0_-20px_50px_rgba(0,0,0,0.5)] overflow-hidden">
+      {/* Card 3: Locations & Reviews */}
+      <div id="locations" className="proto-card sticky top-0 h-screen w-full flex flex-col md:flex-row items-center justify-center bg-dark text-background z-30 shadow-[0_-20px_50px_rgba(0,0,0,0.5)] overflow-hidden">
         <div className="absolute right-0 top-0 w-full h-1/3 md:h-full md:w-1/3 opacity-20 md:opacity-30 mix-blend-luminosity select-none pointer-events-none">
           <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?q=80&w=1200" alt="Cake decorating" className="w-full h-full object-cover" />
         </div>
 
-        <div className="w-full max-w-5xl px-8 flex flex-col md:flex-row gap-16 items-center relative z-20 md:pr-[33%]">
-          <div className="flex-shrink-0 grid grid-cols-2 gap-4">
-            <div className="bg-background/10 backdrop-blur-md border border-white/10 p-6 rounded-2xl text-center shadow-xl">
-              <div className="font-heading font-bold text-4xl text-accent mb-1">4</div>
-              <div className="font-data text-xs tracking-widest opacity-60 uppercase">Locations</div>
-            </div>
-            <div className="bg-background/10 backdrop-blur-md border border-white/10 p-6 rounded-2xl text-center shadow-xl">
-              <div className="font-heading font-bold text-4xl text-accent mb-1">4.9</div>
-              <div className="font-data text-xs tracking-widest opacity-60 uppercase">Average Rating</div>
-            </div>
-            <div className="bg-background/10 backdrop-blur-md border border-white/10 p-6 rounded-2xl text-center shadow-xl col-span-2">
-              <div className="font-heading font-bold text-3xl text-accent mb-1">12K+</div>
-              <div className="font-data text-xs tracking-widest opacity-60 uppercase">Reviews Across the City</div>
+        <div className="w-full max-w-6xl px-8 flex flex-col md:flex-row gap-12 items-center relative z-20 md:pr-[15%]">
+          <div className="flex-1 w-full order-2 md:order-1">
+            <h2 className="font-heading font-bold text-4xl md:text-5xl mb-8">Our Sanctuaries</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[
+                { name: 'Downtown Flagship', address: '142 Artisan Ave, District 1', rating: '4.9' },
+                { name: 'The Eastside Oven', address: '88 Baker St, East End', rating: '4.8' },
+                { name: 'North Market Kiosk', address: 'Bldg 4, North Public Market', rating: '4.9' },
+                { name: 'West End Pastries', address: '202 Coastal Hwy, Westville', rating: '4.7' },
+              ].map((shop, i) => (
+                <div key={i} className="bg-background/10 backdrop-blur-md border border-white/10 p-5 rounded-2xl hover:bg-background/20 transition-colors group cursor-pointer shadow-xl">
+                  <div className="flex justify-between items-start mb-2">
+                    <h4 className="font-heading font-bold text-lg text-accent group-hover:text-white transition-colors">{shop.name}</h4>
+                    <div className="flex items-center gap-1 font-data text-xs font-bold bg-white/10 px-2 py-1 rounded-full text-accent">
+                      <Star size={10} className="fill-accent" /> {shop.rating}
+                    </div>
+                  </div>
+                  <div className="font-data text-sm opacity-60 flex items-center gap-2">
+                    <MapPin size={14} /> {shop.address}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-          <div className="flex-1">
+          <div className="flex-1 w-full order-1 md:order-2">
             <h2 className="font-heading font-bold text-4xl md:text-5xl mb-4">Citywide Acclaim</h2>
             <p className="font-data text-background/80 text-lg mb-6 flex gap-2"><Star size={20} className="fill-accent text-accent mt-1 flex-shrink-0" /> <span>"The lamination on the croissants is unmatched. Truly a sanctuary for pastry lovers." — The Daily Times</span></p>
             <p className="font-data text-background/80 text-lg flex gap-2"><Star size={20} className="fill-accent text-accent mt-1 flex-shrink-0" /> <span>"Their Custom Celebration Cakes are edible masterpieces." — Local Food Guide</span></p>
-
-            <p className="font-data text-background/80 text-lg">Submit a highly specific design request for your celebration cakes. Our master bakers execute bespoke orders with precision.</p>
           </div>
         </div>
       </div>
+
+      {/* Product Modal */}
+      {selectedProduct && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-dark/60 backdrop-blur-sm" onClick={() => setSelectedProduct(null)}></div>
+          <div className="bg-background w-full max-w-4xl max-h-[90vh] rounded-[2rem] overflow-hidden relative z-10 shadow-2xl flex flex-col md:flex-row">
+            <button onClick={() => setSelectedProduct(null)} className="absolute top-4 right-4 bg-white/20 hover:bg-white/40 backdrop-blur-md p-2 rounded-full transition-colors z-20">
+              <X size={24} className="text-dark" />
+            </button>
+            <div className="w-full md:w-1/2 h-64 md:h-auto relative bg-dark">
+              <img src={selectedProduct.image} alt={selectedProduct.name} className="w-full h-full object-cover opacity-90 mix-blend-luminosity" />
+              <div className="absolute inset-0 bg-gradient-to-t from-dark to-transparent opacity-80"></div>
+            </div>
+            <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col bg-background relative z-10 text-dark">
+              <div className="font-data text-accent font-bold tracking-widest text-xs uppercase mb-2">{selectedProduct.category}</div>
+              <h3 className="font-heading font-bold text-3xl md:text-5xl text-dark mb-4 leading-tight">{selectedProduct.name}</h3>
+              <div className="font-data text-2xl font-bold text-primary mb-6">${selectedProduct.price.toFixed(2)}</div>
+              <p className="font-data text-dark/70 text-lg leading-relaxed mb-8">{selectedProduct.desc}</p>
+
+              <div className="mt-auto">
+                {getItemQuantity(selectedProduct.id) > 0 ? (
+                  <div className="flex items-center justify-between bg-primary/10 rounded-full border border-primary/20 overflow-hidden">
+                    <button onClick={() => updateQuantity(selectedProduct, -1)} className="p-4 hover:bg-primary/20 transition-colors w-1/3 flex justify-center"><Minus size={20} className="text-primary" /></button>
+                    <span className="font-mono font-bold text-primary text-xl w-1/3 text-center">{getItemQuantity(selectedProduct.id)}</span>
+                    <button onClick={() => updateQuantity(selectedProduct, 1)} className="p-4 hover:bg-primary/20 transition-colors w-1/3 flex justify-center"><Plus size={20} className="text-primary" /></button>
+                  </div>
+                ) : (
+                  <button onClick={() => updateQuantity(selectedProduct, 1)} className="w-full bg-dark text-background py-4 flex items-center justify-center gap-2 rounded-full font-bold transition-colors font-data tracking-wide text-lg hover:bg-primary shadow-xl">
+                    <ShoppingCart size={20} /> Add to Order
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
     </section>
   );
