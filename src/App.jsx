@@ -49,7 +49,7 @@ const Navbar = ({ cartItems = [], setIsCartOpen }) => {
 
   // ScrollToTop strictly for React Router transition to separate pages
   const location = useLocation();
-  const isDarkNavPage = location.pathname === '/menu' || location.pathname === '/about';
+  const isDarkNavPage = ['/menu', '/about', '/locations', '/custom'].includes(location.pathname);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -62,8 +62,8 @@ const Navbar = ({ cartItems = [], setIsCartOpen }) => {
         <div className="hidden lg:flex gap-8 font-data text-sm font-medium tracking-wide">
           <Link to="/menu" className="hover:-translate-y-[1px] transition-transform">Menu</Link>
           <Link to="/about" className="hover:-translate-y-[1px] transition-transform">About Us</Link>
-          <a href="/#locations" className="hover:-translate-y-[1px] transition-transform">Locations</a>
-          <a href="/#custom" className="hover:-translate-y-[1px] transition-transform">Custom Requests</a>
+          <Link to="/locations" className="hover:-translate-y-[1px] transition-transform">Locations</Link>
+          <Link to="/custom" className="hover:-translate-y-[1px] transition-transform">Custom Requests</Link>
         </div>
         <div className="flex gap-4 items-center">
           <button
@@ -129,7 +129,7 @@ const Hero = () => {
           Daily fresh bakes, signature layered cakes, and delicate morning pastries across four city locations.
         </p>
 
-        <Link to="/menu" className="hero-anim magnetic-btn inline-block bg-background text-primary px-8 py-4 text-lg font-bold">
+        <Link to="/menu" style={{ width: 'fit-content' }} className="hero-anim magnetic-btn flex items-center justify-center bg-background text-primary px-8 py-4 text-lg font-bold">
           <span className="relative z-10">Explore Our Collection</span>
           <span className="hover-layer bg-accent/30"></span>
         </Link>
@@ -885,6 +885,84 @@ const MenuSection = ({ cartItems, setCartItems }) => {
 };
 
 // ==============================
+// 7. LOCATIONS & CUSTOM REQUESTS
+// ==============================
+const LocationsPage = () => {
+  const shops = [
+    { name: 'Downtown Flagship', address: '142 Artisan Ave, District 1', hours: '7 AM - 6 PM Daily', img: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=800' },
+    { name: 'The Eastside Oven', address: '88 Baker St, East End', hours: '6 AM - 4 PM (Closed Mon)', img: 'https://images.unsplash.com/photo-1542691457-cbe4df041bf2?q=80&w=800' },
+    { name: 'North Market Kiosk', address: 'Bldg 4, North Public Market', hours: '8 AM - 8 PM Daily', img: 'https://images.unsplash.com/photo-1517433670267-08bbd4be890f?q=80&w=800' },
+    { name: 'West End Pastries', address: '202 Coastal Hwy, Westville', hours: '7 AM - 5 PM Daily', img: 'https://images.unsplash.com/photo-1495147466023-af5c1926673a?q=80&w=800' },
+  ];
+
+  return (
+    <section className="bg-background min-h-screen pt-32 pb-24 px-6 md:px-12 flex flex-col justify-center">
+      <div className="max-w-7xl mx-auto w-full">
+        <div className="text-center mb-16">
+          <h1 className="font-heading font-bold text-5xl md:text-7xl text-dark mb-6">Our <span className="text-primary italic font-drama">Sanctuaries.</span></h1>
+          <p className="font-data text-dark/60 text-lg max-w-xl mx-auto">Four distinct laboratories of pastry, united by a singular protocol of perfection.</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          {shops.map((shop, i) => (
+            <div key={i} className="flex flex-col group">
+              <div className="w-full h-80 rounded-[2rem] overflow-hidden mb-6 relative shadow-xl">
+                <img src={shop.img} alt={shop.name} className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000" />
+                <div className="absolute inset-0 bg-dark/20 mix-blend-multiply transition-colors duration-500 group-hover:bg-dark/10"></div>
+              </div>
+              <h3 className="font-heading font-bold text-3xl text-dark group-hover:text-primary transition-colors">{shop.name}</h3>
+              <div className="font-data text-dark/70 mt-2 flex items-center gap-2"><MapPin size={16} className="text-primary" /> {shop.address}</div>
+              <div className="font-data font-mono text-sm tracking-widest text-dark/50 uppercase mt-4">{shop.hours}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const CustomRequestPage = () => {
+  return (
+    <section className="bg-background min-h-screen pt-32 pb-24 px-6 md:px-12 flex flex-col items-center justify-center">
+      <div className="max-w-4xl mx-auto w-full bg-white rounded-[3rem] shadow-2xl overflow-hidden flex flex-col md:flex-row border border-primary/10">
+        <div className="w-full md:w-1/2 h-64 md:h-auto relative">
+          <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?q=80&w=800" alt="Exquisite layered cake" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-dark to-transparent opacity-80"></div>
+          <div className="absolute bottom-8 left-8 right-8">
+            <h2 className="font-heading font-bold text-3xl text-white mb-2 leading-tight">Bespoke<br />Celebrations</h2>
+            <p className="font-data text-white/80 text-sm">Submit your highly specific design request. Our master bakers execute bespoke orders with absolute precision.</p>
+          </div>
+        </div>
+
+        <div className="w-full md:w-1/2 p-8 md:p-12">
+          <form className="flex flex-col gap-6" onSubmit={(e) => e.preventDefault()}>
+            <div>
+              <label className="font-data text-xs font-bold tracking-widest uppercase text-dark/60 mb-2 block">Your Name</label>
+              <input type="text" className="w-full bg-background border-b-2 border-primary/20 p-2 font-data focus:outline-none focus:border-primary transition-colors" placeholder="John Doe" />
+            </div>
+            <div>
+              <label className="font-data text-xs font-bold tracking-widest uppercase text-dark/60 mb-2 block">Email Address</label>
+              <input type="email" className="w-full bg-background border-b-2 border-primary/20 p-2 font-data focus:outline-none focus:border-primary transition-colors" placeholder="john@example.com" />
+            </div>
+            <div>
+              <label className="font-data text-xs font-bold tracking-widest uppercase text-dark/60 mb-2 block">Event Date</label>
+              <input type="date" className="w-full bg-background border-b-2 border-primary/20 p-2 font-data focus:outline-none focus:border-primary transition-colors text-dark/80" />
+            </div>
+            <div>
+              <label className="font-data text-xs font-bold tracking-widest uppercase text-dark/60 mb-2 block">Vision Board (Description)</label>
+              <textarea rows="4" className="w-full bg-background border-2 border-primary/20 rounded-xl p-4 font-data focus:outline-none focus:border-primary transition-colors resize-none mb-4" placeholder="Describe flavor profiles, aesthetics, tiers..."></textarea>
+            </div>
+            <button className="w-full bg-primary text-background py-4 rounded-full font-bold transition-colors font-data tracking-wide hover:bg-dark shadow-xl">
+              Initiate Protocol
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// ==============================
 // MAIN APP COMPONENT & ROUTER
 // ==============================
 function Home({ cartItems, setCartItems }) {
@@ -914,6 +992,8 @@ function App() {
           <Route path="/" element={<Home cartItems={cartItems} setCartItems={setCartItems} />} />
           <Route path="/menu" element={<MenuSection cartItems={cartItems} setCartItems={setCartItems} />} />
           <Route path="/about" element={<AboutUs />} />
+          <Route path="/locations" element={<LocationsPage />} />
+          <Route path="/custom" element={<CustomRequestPage />} />
         </Routes>
 
         <div className="bg-dark">
