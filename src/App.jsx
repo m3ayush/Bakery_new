@@ -65,7 +65,7 @@ const Navbar = ({ cartItems = [], setIsCartOpen }) => {
             <Link to="/menu" className="hover:-translate-y-[1px] transition-transform">Menu</Link>
             <Link to="/about" className="hover:-translate-y-[1px] transition-transform">About Us</Link>
             <Link to="/locations" className="hover:-translate-y-[1px] transition-transform">Locations</Link>
-            <Link to="/custom" className="hover:-translate-y-[1px] transition-transform">Custom Requests</Link>
+            <Link to="/custom" className="hover:-translate-y-[1px] transition-transform">Custom Cakes</Link>
           </div>
           <div className="flex gap-4 items-center">
             <button
@@ -109,7 +109,7 @@ const Navbar = ({ cartItems = [], setIsCartOpen }) => {
             <Link to="/menu" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-primary transition-colors">Menu</Link>
             <Link to="/about" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-primary transition-colors">About Us</Link>
             <Link to="/locations" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-primary transition-colors">Locations</Link>
-            <Link to="/custom" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-primary transition-colors">Custom Requests</Link>
+            <Link to="/custom" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-primary transition-colors">Custom Cakes</Link>
 
             <Link to="/menu" onClick={() => setIsMobileMenuOpen(false)} className="mt-8 bg-accent text-dark px-8 py-4 text-xl font-bold rounded-full shadow-xl">
               Order Now
@@ -369,9 +369,9 @@ const Features = () => {
   return (
     <section ref={container} className="py-12 px-6 max-w-7xl mx-auto">
       {/* Product Image Showcase to break up the text */}
-      <div
-        onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-        className="w-full mb-12 rounded-[2rem] overflow-hidden h-[40vh] relative group cursor-pointer"
+      <Link
+        to="/about"
+        className="block w-full mb-12 rounded-[2rem] overflow-hidden h-[40vh] relative group cursor-pointer"
       >
         <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=2000" alt="Fresh baked artisan breads and croissants" className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-1000" />
         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500"></div>
@@ -379,7 +379,7 @@ const Features = () => {
           <span className="font-mono text-sm tracking-widest bg-dark/60 backdrop-blur-sm px-4 py-2 rounded-full mb-4 inline-block">OUR SPECIALTIES</span>
           <h3 className="font-heading text-4xl md:text-5xl font-bold">Lamination & Crumb.</h3>
         </div>
-      </div>
+      </Link>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="feature-card h-full cursor-pointer">
@@ -393,9 +393,9 @@ const Features = () => {
           </a>
         </div>
         <div className="feature-card h-full cursor-pointer">
-          <a href="/#custom" className="block h-full hover:-translate-y-2 transition-transform duration-500">
+          <Link to="/custom" className="block h-full hover:-translate-y-2 transition-transform duration-500">
             <FeatureCard3 />
-          </a>
+          </Link>
         </div>
       </div>
     </section>
@@ -665,7 +665,7 @@ const Footer = () => {
             <h4 className="font-heading opacity-40 uppercase tracking-widest text-xs mb-2">Navigation</h4>
             <a href="#" className="font-data hover:text-accent transition-colors">Menu</a>
             <a href="#" className="font-data hover:text-accent transition-colors">Locations</a>
-            <a href="#" className="font-data hover:text-accent transition-colors">Custom Request</a>
+            <a href="#" className="font-data hover:text-accent transition-colors">Custom Cake</a>
           </div>
           <div className="flex flex-col gap-4">
             <h4 className="font-heading opacity-40 uppercase tracking-widest text-xs mb-2">Legal</h4>
@@ -918,7 +918,7 @@ const MenuSection = ({ cartItems, setCartItems }) => {
 };
 
 // ==============================
-// 7. LOCATIONS & CUSTOM REQUESTS
+// 7. LOCATIONS & CUSTOM CAKES
 // ==============================
 const LocationsPage = () => {
   const shops = [
